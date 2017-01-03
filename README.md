@@ -15,4 +15,4 @@ Notes:
 
 2. websockets needs --no-compile: https://github.com/aaugustin/websockets/issues/147
 
-3. We need to modify the Makefile for the VXLAN-GPE driver to compile against headers from the 3.19.0-78-generic kernel. The kernel in the Mininet image is older and doesn't have udp_tunnel.h in its linux headers, which is required to compile this driver.
+3. I think we can skip installing the VXLAN driver (required for INT: https://github.com/p4lang/ntf/tree/int-demo/apps/int) because the Mininet image ships with a version of the VXLAN driver for openvswitch. 
