@@ -12,3 +12,5 @@ Testing infrastructure for needlstk
 Notes:
 
 1. Apparently java 7 is deprecated in Spark 2.0: http://spark.apache.org/releases/spark-release-2-0-0.html#deprecations I am not sure if this affects us, but is worth noting because the default-jre and jdk in Ubuntu 14.04 (the distro of the VM image) are version 7.
+
+2. websockets needs --no-compile: https://github.com/aaugustin/websockets/issues/147
