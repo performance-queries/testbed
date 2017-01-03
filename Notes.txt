@@ -1,0 +1,15 @@
+Apparently java 7 is deprecated in Spark 2.0:
+http://spark.apache.org/releases/spark-release-2-0-0.html#deprecations
+I am not sure if this affects us, but is worth noting because the default-jre and jdk in Ubuntu 14.04
+(the distro of the mininet VM image) are version 7.
+
+Initially, I thought of installing the INT demo from https://github.com/p4lang/ntf/tree/int-demo/apps/int
+but that seems to have one too many teething troubles during installation.
+(e.g., it requires a specific set of kernel headers for the VXLAN-GPE driver.)
+Besides, we don't need all of the infrastructure from the INT demo (VXLAN headers, monitors, etc.)
+
+I think a simpler alternative is to follow one of the P4 tutorials and minimize the P4 trusted
+code base to the P4 behavioral model and the P4 compiler alone:
+https://github.com/p4lang/tutorials/tree/master/SIGCOMM_2015
+
+This means we have to write the HTTP client and server and the UDP traffic generator, but that's a reasonable tradeoff.
