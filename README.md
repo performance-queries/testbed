@@ -1,7 +1,7 @@
 # testbed
 Testing infrastructure for needlstk
 
-1. Launch an EC2 instance with Ubuntu 14.04 as the operating system.
+Launch an EC2 instance with Ubuntu 14.04 as the operating system.
 Unfortunately, the default Ubuntu 14.04 AMI on EC2 has kernel version 3.13.0-105-generic,
 which has an error when setting net.ipv4.neigh.default.gc_thresh1/2/3,
 as documented here (https://bugs.launchpad.net/ubuntu/+source/linux-lts-trusty/+bug/1634892)
@@ -13,3 +13,4 @@ The mininet VM image has a later version of the kernel:
 3.19.0-78-generic, which fixed this issue
 
 So I am using one of the cloud-images.com AMIs:https://cloud-images.ubuntu.com/locator/ec2/
+(specifically, AMI ID: ami-5ac2cd4d, which was released in Dec 2016)
