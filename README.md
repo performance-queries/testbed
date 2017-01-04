@@ -12,5 +12,7 @@ Mininet needs to set net.ipv4.neigh.default.gc_thresh1/2/3 as part of its boot u
 The mininet VM image has a later version of the kernel:
 3.19.0-78-generic, which fixed this issue
 
-So I am using one of the cloud-images.com AMIs:https://cloud-images.ubuntu.com/locator/ec2/
-(specifically, AMI ID: ami-5ac2cd4d, which was released in Dec 2016)
+You can upgrade to a 3.19 kernel using the command:
+sudo apt-get install linux-generic-lts-vivid
+
+followed by rebooting the machine
