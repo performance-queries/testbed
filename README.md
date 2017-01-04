@@ -1,9 +1,15 @@
 # testbed
 Testing infrastructure for needlstk
 
-1. Get VMware Fusion Pro for OS X (or equivalent for other platforms).
-2. Get Mininet VM image from http://mininet.org (the native installations are flaky from past experience)
-3. Launch VM image inside Fusion Pro; you will likely have to upgrade the image, meaning you can't use the upgraded image in an older version of Fusion Pro.
-4. Install java, required for Spark: sudo apt-get install default-jdk default-jre
-5. Get Spark Streaming from http://spark.apache.org/streaming/
-6. Run the network word count example from here: http://spark.apache.org/docs/latest/streaming-programming-guide.html#a-quick-example As per http://stackoverflow.com/questions/31579204/spark-streaming-example-not-working-for-me-network-word-count-maybe-data-not you need to add --master=local[2] to get this to work on a virtual machine.
+1. Launch an EC2 instance with Ubuntu 14.04 as the operating system.
+Unfortunately, the default Ubuntu 14.04 AMI on EC2 has kernel version 3.13.0-105-generic,
+which has an error when setting net.ipv4.neigh.default.gc_thresh1/2/3,
+as documented here (https://bugs.launchpad.net/ubuntu/+source/linux-lts-trusty/+bug/1634892)
+
+Mininet needs to set net.ipv4.neigh.default.gc_thresh1/2/3 as part of its boot up
+(https://github.com/mininet/mininet/blob/3284b04f2bbfae83636105ff1dcab5d026f75825/mininet/util.py#L447)
+
+The mininet VM image has a later version of the kernel:
+3.19.0-78-generic, which fixed this issue
+
+So I am using one of the cloud-images.com AMIs:https://cloud-images.ubuntu.com/locator/ec2/
