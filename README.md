@@ -16,3 +16,6 @@ You can upgrade to a 3.19 kernel using the command:
 sudo apt-get install linux-generic-lts-vivid
 
 followed by rebooting the machine
+
+Get Spark Streaming from http://d3kbcqa49mib13.cloudfront.net/spark-1.6.3-bin-hadoop2.6.tgz
+(I am using spark-1.6.3 because spark 2 requires Java 8, which isn't available on Ubuntu).
