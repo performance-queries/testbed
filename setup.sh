@@ -17,3 +17,9 @@ wget http://d3kbcqa49mib13.cloudfront.net/spark-2.1.0-bin-hadoop2.7.tgz
 tar xvzf spark-2.1.0-bin-hadoop2.7.tgz 
 cd spark-2.1.0-bin-hadoop2.7/
 ./bin/run-example --master local[2] streaming.NetworkWordCount localhost 9999
+
+# Apache installation
+sudo apt-get install apache2
+
+# Rust installation
+curl https://sh.rustup.rs -sSf | sh
