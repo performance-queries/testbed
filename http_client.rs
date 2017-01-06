@@ -11,7 +11,7 @@ fn main() {
     // mutable array with 3000 elements, each initialized to zero
     let mut result = [0; 3000];
 
-    // &mut result creates a slice with all elements
+    // &mut result creates a mutable slice with all elements
     // mut indicates that it can be mutated
     let _ = stream.read(&mut result);
 
