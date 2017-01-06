@@ -8,8 +8,8 @@ fn main() {
     // _ ignores the result
     let _ = stream.write(b"GET /loremipsum.txt\r\n");
 
-    // mutable array with 3000 elements, each initialized to zero
-    let mut result = [0; 3000];
+    // mutable array with 3500 elements, each initialized to zero
+    let mut result = [0; 3500];
 
     // &mut result creates a mutable slice with all elements
     // mut indicates that it can be mutated
