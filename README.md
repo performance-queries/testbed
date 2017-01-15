@@ -19,11 +19,24 @@ You can upgrade to a 3.19 kernel using the command:
 sudo apt-get install linux-generic-lts-vivid
 , followed by rebooting the machine
 
-Spark Streaming
+Spark Streaming (may not be needed)
 ==============================
 Get Spark Streaming from http://d3kbcqa49mib13.cloudfront.net/spark-2.1.0-bin-hadoop2.7.tgz
+
+REDIS
+=============================
 
 UDP ON/OFF traffic and HTTP client
 ==============================
 Consider using Rust for this: https://doc.rust-lang.org/1.14.0/std/net/index.html
 May be more adventurous than required.
+
+P4
+==============
+Get behavioral model from https://github.com/p4lang/behavioral-model
+Get P4-16 compiler from https://github.com/p4lang/p4c
+
+Marple
+==============
+Get marple from https://github.com/performance-queries/marple
+Maven for marple: sudo apt-get install maven
