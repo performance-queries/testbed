@@ -2,3 +2,8 @@ http_client
 udp_traffic_generator
 Cargo.lock
 target
+custom/results/
+custom/register_values/
+custom/setup_table_commands.txt
+custom/*.pcap
+
