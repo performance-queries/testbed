@@ -142,9 +142,9 @@ parser P(packet_in b,
 
     state parse_ipv4 {
         b.extract(p.ip);
-        transition select(p.ip.fragOffset, p.ip.ihl, p.ip.protocol) {
-            (13w0x0 &&& 13w0x0, 4w0x5 &&& 4w0xf, 8w0x6 &&& 8w0xff): parse_tcp;
-            (13w0x0 &&& 13w0x0, 4w0x5 &&& 4w0xf, 8w0x11 &&& 8w0xff): parse_udp;
+        transition select(p.ip.protocol) {
+            8w0x6: parse_tcp;
+            8w0x11: parse_udp;
             default: accept;
         }
     }
@@ -286,11 +286,17 @@ control Eg(inout Headers hdrs,
         evictedValue = {0,0,0,0};
         Key_result inKey = {0,0,0,0,0,0};
         
+        bit<32> _inKey_f0 = hdrs.ip.srcAddr;
         inKey.f0 = hdrs.ip.srcAddr;
+        bit<32> _inKey_f1 = hdrs.ip.dstAddr;
         inKey.f1 = hdrs.ip.dstAddr;
+        bit<32> _inKey_f2 = meta.common_meta.srcport;
         inKey.f2 = meta.common_meta.srcport;
+        bit<32> _inKey_f3 = meta.common_meta.dstport;
         inKey.f3 = meta.common_meta.dstport;
+        bit<32> _inKey_f4 = (bit<32>)hdrs.ip.protocol;
         inKey.f4 = (bit<32>)hdrs.ip.protocol;
+        bit<32> _inKey_f5 = meta.common_meta.switchId;
         inKey.f5 = meta.common_meta.switchId;
         
         bit<32> _foundKey_f0 = 0;
@@ -320,12 +326,12 @@ control Eg(inout Headers hdrs,
         regV_result_total_time.read(_foundValue_total_time, hsh);
         regV_result_num_bursts.read(_foundValue_num_bursts, hsh);
         bool same = true;
-        same = (_foundKey_f0 == inKey.f0) ? same : false;
-        same = (_foundKey_f1 == inKey.f1) ? same : false;
-        same = (_foundKey_f2 == inKey.f2) ? same : false;
-        same = (_foundKey_f3 == inKey.f3) ? same : false;
-        same = (_foundKey_f4 == inKey.f4) ? same : false;
-        same = (_foundKey_f5 == inKey.f5) ? same : false;
+        same = (_foundKey_f0 == _inKey_f0) ? same : false;
+        same = (_foundKey_f1 == _inKey_f1) ? same : false;
+        same = (_foundKey_f2 == _inKey_f2) ? same : false;
+        same = (_foundKey_f3 == _inKey_f3) ? same : false;
+        same = (_foundKey_f4 == _inKey_f4) ? same : false;
+        same = (_foundKey_f5 == _inKey_f5) ? same : false;
         bool zero = true;
         zero = (_foundKey_f0 == 0) ? zero : false;
         zero = (_foundKey_f1 == 0) ? zero : false;
@@ -388,12 +394,12 @@ control Eg(inout Headers hdrs,
 		meta.query_meta._result_valid = _tmp_result_valid ? (1w1) : (1w0);
 
         
-        regK_result_f0.write(hsh, inKey.f0);
-        regK_result_f1.write(hsh, inKey.f1);
-        regK_result_f2.write(hsh, inKey.f2);
-        regK_result_f3.write(hsh, inKey.f3);
-        regK_result_f4.write(hsh, inKey.f4);
-        regK_result_f5.write(hsh, inKey.f5);
+        regK_result_f0.write(hsh, _inKey_f0);
+        regK_result_f1.write(hsh, _inKey_f1);
+        regK_result_f2.write(hsh, _inKey_f2);
+        regK_result_f3.write(hsh, _inKey_f3);
+        regK_result_f4.write(hsh, _inKey_f4);
+        regK_result_f5.write(hsh, _inKey_f5);
         
         regV_result_last_time.write(hsh, _val_last_time);
         regV_result_total_size.write(hsh, _val_total_size);
@@ -401,16 +407,22 @@ control Eg(inout Headers hdrs,
         regV_result_num_bursts.write(hsh, _val_num_bursts);
     }
 
-    
+    register<bit<32>>(32w100) debug; 
 
     apply {
         meta.common_meta.switchId = 1;
         meta.common_meta.payload_length = hdrs.tcp.isValid() ? (bit<32>)hdrs.ip.packet_length - (bit<32>)hdrs.tcp.dataOffset : (bit<32>)hdrs.udp.length_;
         meta.common_meta.egress_timestamp = meta.queueing_metadata.enq_timestamp[31:0] + (bit<32>)meta.queueing_metadata.deq_timedelta;
         meta.common_meta.pktpath = 0;
-        meta.common_meta.srcport = (hdrs.tcp.srcport != 0) ? (bit<32>)hdrs.tcp.srcport : (bit<32>)hdrs.udp.srcPort;
-        meta.common_meta.dstport = (hdrs.tcp.srcport != 0) ? (bit<32>)hdrs.tcp.dstport : (bit<32>)hdrs.udp.dstPort;
+        meta.common_meta.srcport = hdrs.tcp.isValid() ? (bit<32>)hdrs.tcp.srcport : 0;
+        meta.common_meta.srcport = (hdrs.udp.isValid() && !hdrs.tcp.isValid()) ? (bit<32>)hdrs.udp.srcPort : meta.common_meta.srcport;
+        meta.common_meta.dstport = hdrs.tcp.isValid() ? (bit<32>)hdrs.tcp.dstport : 0;
+        meta.common_meta.dstport = (hdrs.udp.isValid() && !hdrs.tcp.isValid()) ? (bit<32>)hdrs.udp.dstPort : meta.common_meta.dstport;
         
+        bit<32> idx = hdrs.tcp.isValid() ? 32w1 : 32w0;
+        bit<32> subj = hdrs.tcp.isValid() ? (bit<32>)hdrs.tcp.srcport : (bit<32>)hdrs.udp.srcPort;
+        debug.write(idx, subj);
+
 		Key_result evictedKey_result;
 		Value_result evictedValue_result;
 		groupby_result(evictedKey_result, evictedValue_result);
