@@ -1,0 +1,4 @@
+1. FILTER, MAP, ZIP: Need a collection server to collect packets that are streamed out (when packets are cloned).
+2. GROUPBY: Backing store for the aggregations + evicting + resetting the cache entry + cloning + merging in the backing store.
+3. Present current contents of aggregation by: reading on-chip cache + reading backing store + merging the two when presenting
+the result (but not updating the backing store itself).
