@@ -1,6 +1,8 @@
 # testbed
 Testing infrastructure for needlstk
 
+Update: I have had trouble building p4c as of May 10, 2017 with ubuntu 14, or even ubuntu 16.04.1. A fresh copy of ubuntu 16.04.2 worked, so it may be well worth the time to start from that base image instead. -- @ngsrinivas
+
 Mininet
 =============================
 
