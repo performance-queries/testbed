@@ -23,10 +23,10 @@ Sample queries are located in custom/per_flow_query and custom/per_packet_query,
 Then run the sequence of commands to start the fake HTTP client and UDP flooder.
 Note: this requires sourdough to be installed. It is already installed if using the Amazon snapshot.
 ```
-mininet> h1 tcpserver $port1 &
-mininet> h2 receiver $port2 &
-mininet> h3 sender h2 $port2 &
-mininet> h2 tcpclient h1 $port1
+mininet> h1 $sourdough/examples/tcpserver $port1 &
+mininet> h2 $sourdough/datagrump/receiver $port2 &
+mininet> h3 $sourdough/datagrump/sender h2 $port2 &
+mininet> h2 $sourdough/examples/tcpclient h1 $port1
 ```
 The last command will print out the times for each subsequent "GET" request. Copy this output after completing the instructions below. 
 The following instructions depend on which query you're running:
