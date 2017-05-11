@@ -1,7 +1,11 @@
 # testbed
 Testing infrastructure for needlstk
 
-Update: I have had trouble building p4c as of May 10, 2017 with ubuntu 14, or even ubuntu 16.04.1. A fresh copy of ubuntu 16.04.2 worked, so it may be well worth the time to start from that base image instead. -- @ngsrinivas
+P4
+==============
+Only works on 64-bit ubuntu. Recommended ubuntu 16.04.2 LTS (as of May 11 2017) -- @ngsrinivas
+Get behavioral model from https://github.com/p4lang/behavioral-model
+Get P4-16 compiler from https://github.com/p4lang/p4c
 
 Mininet
 =============================
@@ -32,11 +36,6 @@ UDP ON/OFF traffic and HTTP client
 ==============================
 Consider using Rust for this: https://doc.rust-lang.org/1.14.0/std/net/index.html
 May be more adventurous than required.
-
-P4
-==============
-Get behavioral model from https://github.com/p4lang/behavioral-model
-Get P4-16 compiler from https://github.com/p4lang/p4c
 
 Marple
 ==============
