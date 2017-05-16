@@ -19,7 +19,7 @@ from mininet.net import Mininet
 from mininet.topo import Topo
 from mininet.log import setLogLevel, info
 from mininet.cli import CLI
-
+from mininet.util import dumpNetConnections
 from p4_mininet import P4Switch, P4Host
 
 import argparse
@@ -86,13 +86,15 @@ def main():
         else:
             h.setARP(sw_addr[n], sw_mac[n])
             h.setDefaultRoute("dev eth0 via %s" % sw_addr[n])
-
+    s1 = net.get('s1')
+    print 's1-eth1 IP = %s' % s1.intf('s1-eth1').IP()
+    print 's1-eth2 IP = %s' % s1.intf('s1-eth2').IP()
     for n in xrange(num_hosts):
         h = net.get('h%d' % (n + 1))
         h.describe()
 
     sleep(1)
-
+    dumpNetConnections(net)
     print "Ready !"
 
     CLI( net )
