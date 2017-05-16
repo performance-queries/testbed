@@ -40,6 +40,57 @@ parser.add_argument('--pcap-dump', help='Dump packets on interfaces to pcap file
 
 args = parser.parse_args()
 
+class DemoSwitch(P4Switch):
+    """ Demo switch that can hot-swap one query JSON for another. """
+    def __init__(self, 
+                 name, 
+                 sw_path = None, 
+                 json_path = None, 
+                 thrift_port = None, 
+                 pcap_dump = None, 
+                 **kwargs):
+        P4Switch.__init__(self, name,
+                          sw_path = sw_path,
+                          json_path = json_path,
+                          thrift_port = thrift_port,
+                          pcap_dump = pcap_dump,
+                          **kwargs)
+
+    def restart(self, json_path):
+        """Restart a new P4 switch with the new JSON"""
+        print "Stopping P4 switch", self.name
+        """ Execute part of the stop() routine. """
+        self.output.flush()
+        self.cmd('kill %' + self.sw_path)
+        self.cmd('wait')
+        """ Now re-run part of the start() routine that constructs a new switch
+        path with the new JSON argument. """
+        self.json_path = json_path
+        args = [self.sw_path]
+        # args.extend( ['--name', self.name] )
+        # args.extend( ['--dpid', self.dpid] )
+        for port, intf in self.intfs.items():
+            if not intf.IP():
+                args.extend( ['-i', str(port) + "@" + intf.name] )
+        if self.pcap_dump:
+            args.append("--pcap")
+            # args.append("--useFiles")
+        if self.thrift_port:
+            args.extend( ['--thrift-port', str(self.thrift_port)] )
+        if self.nanomsg:
+            args.extend( ['--nanolog', self.nanomsg] )
+        args.extend( ['--device-id', str(self.device_id)] )
+        # P4Switch.device_id += 1
+        args.append(self.json_path)
+        if self.enable_debugger:
+            args.append("--debugger")
+        logfile = '/tmp/p4s.%s.log' % self.name
+        print ' '.join(args)
+
+        self.cmd( ' '.join(args) + ' >' + logfile + ' 2>&1 &' )
+        # self.cmd( ' '.join(args) + ' > /dev/null 2>&1 &' )
+
+        print "switch has been restarted"
 
 class SingleSwitchTopo(Topo):
     "Single switch connected to n (< 256) hosts."
@@ -70,7 +121,7 @@ def main():
                             num_hosts)
     net = Mininet(topo = topo,
                   host = P4Host,
-                  switch = P4Switch,
+                  switch = DemoSwitch,
                   controller = None)
     net.start()
 
