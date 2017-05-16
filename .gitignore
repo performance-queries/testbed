@@ -6,4 +6,13 @@ custom/results/
 custom/register_values/
 custom/setup_table_commands.txt
 custom/*.pcap
-
+custom/parsed_registers.txt
+custom/interpreted_results.txt
+# Openflow and other dependencies
+revised/
+loxigen/
+mininet/
+oflops/
+oftest/
+openflow/
+pox/
