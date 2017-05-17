@@ -6,8 +6,9 @@ custom/results/
 custom/register_values/
 custom/setup_table_commands.txt
 custom/*.pcap
-custom/parsed_registers.txt
+custom/parsed_*registers.txt
 custom/interpreted_results.txt
+custom/read_register_CLI_cmds.txt
 # Openflow and other dependencies
 revised/
 loxigen/
@@ -16,3 +17,5 @@ oflops/
 oftest/
 openflow/
 pox/
+# Plots generated on the fly
+qlens_series*.png

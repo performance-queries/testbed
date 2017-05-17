@@ -1,0 +1,6 @@
+# outfile and infile must be provided as arguments to gnuplot through the -e switch!
+set terminal png
+set output outfile
+set xlabel "Timestamp (s)"
+set ylabel "Queue size (pkts)"
+plot infile using ($2 / 1000000):1 with points title ""
