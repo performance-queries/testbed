@@ -9,6 +9,7 @@ custom/*.pcap
 custom/parsed_*registers.txt
 custom/interpreted_results.txt
 custom/read_register_CLI_cmds.txt
+custom/demo-web/qlens_series*.png
 # Openflow and other dependencies
 revised/
 loxigen/
