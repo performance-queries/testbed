@@ -20,6 +20,6 @@ openflow/
 pox/
 histograms/results_*/
 histograms/outputs/
-histograms/testdata/
+testdata/
 # Plots generated on the fly
 qlens_series*.png
