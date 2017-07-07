@@ -1,0 +1,4 @@
+sh echo "Resuming workload"
+h2 killall receiver
+h3 killall sender
+source demo_mininet_workload.mn

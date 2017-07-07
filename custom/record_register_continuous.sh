@@ -29,10 +29,12 @@ do
     j=$((j+1))
     # Plot latest file
     python parse_latest_register_values.py $outFile > parsed_latest_registers.txt
+    echo "Plotting latest snapshot"
     gnuplot -e "infile='parsed_latest_registers.txt';outfile='demo-web/qlens_series_latest.png'" plot_qlens.gplt
     # Figure out if full time series should be reparsed and updated
     if [ $regen_plot_counter -eq 0 ]; then
 	python parse_all_register_values.py > parsed_all_registers.txt
+	echo "Plotting all registers snapshot"
 	gnuplot -e "infile='parsed_all_registers.txt'; outfile='demo-web/qlens_series_full.png'" plot_qlens.gplt
 	regen_plot_counter=$init_regen_plot_counter
     fi

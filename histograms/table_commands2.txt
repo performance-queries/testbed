@@ -1,0 +1,7 @@
+set_queue_rate 1000
+table_add ipv4_match Set_nhop 10.0.0.10/32 => 10.1.0.1 1
+table_add dmac Set_dmac 10.1.0.1 => 00:aa:bb:00:00:01
+table_add smac Set_smac 1 => 00:aa:bb:00:01:00
+table_add ipv4_match Set_nhop 10.0.1.10/32 => 10.4.0.1 2
+table_add dmac Set_dmac 10.4.0.1 => 00:aa:bb:00:03:01
+table_add smac Set_smac 2 => 00:aa:bb:00:01:01

@@ -1,0 +1,35 @@
+set_queue_rate 1000
+table_add ipv4_match Set_nhop 10.0.0.10/32 => 10.0.0.10 1
+table_add dmac Set_dmac 10.0.0.10 => 00:04:00:00:00:00
+table_add smac Set_smac 1 => 00:aa:bb:00:00:00
+table_add ipv4_match Set_nhop 10.0.1.10/32 => 10.1.0.1 2
+table_add dmac Set_dmac 10.1.0.1 => 00:aa:bb:00:01:00
+table_add smac Set_smac 2 => 00:aa:bb:00:00:01
+table_add dmac Set_dmac 10.2.0.1 => 00:04:00:00:02:00
+table_add smac Set_smac 3 => 00:aa:bb:00:00:02
+#####
+set_queue_rate 1000
+table_add ipv4_match Set_nhop 10.0.0.10/32 => 10.0.0.1 1
+table_add dmac Set_dmac 10.0.0.1 => 00:aa:bb:00:00:01
+table_add smac Set_smac 1 => 00:aa:bb:00:01:00
+table_add ipv4_match Set_nhop 10.0.1.10/32 => 10.3.0.1 2
+table_add dmac Set_dmac 10.3.0.1 => 00:aa:bb:00:03:01
+table_add smac Set_smac 2 => 00:aa:bb:00:01:01
+#####
+set_queue_rate 1000
+table_add ipv4_match Set_nhop 10.0.0.10/32 => 10.0.0.1 1
+table_add dmac Set_dmac 10.0.0.1 => 00:aa:bb:00:00:02
+table_add smac Set_smac 1 => 00:aa:bb:00:02:00
+table_add ipv4_match Set_nhop 10.0.1.10/32 => 10.3.0.1 2
+table_add dmac Set_dmac 10.3.0.1 => 00:aa:bb:00:03:02
+table_add smac Set_smac 2 => 00:aa:bb:00:02:01
+#####
+set_queue_rate 1000
+table_add ipv4_match Set_nhop 10.0.0.10/32 => 10.2.0.1 3
+table_add dmac Set_dmac 10.1.0.1 => 00:aa:bb:00:01:01
+table_add smac Set_smac 2 => 00:aa:bb:00:03:01
+table_add dmac Set_dmac 10.2.0.1 => 00:04:00:00:02:01
+table_add smac Set_smac 3 => 00:aa:bb:00:03:02
+table_add ipv4_match Set_nhop 10.0.1.10/32 => 10.0.1.10 1
+table_add dmac Set_dmac 10.0.1.10 => 00:04:00:00:00:01
+table_add smac Set_smac 1 => 00:aa:bb:00:03:01

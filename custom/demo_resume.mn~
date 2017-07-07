@@ -1,0 +1,4 @@
+h1 killall tcpserver
+h2 killall receiver
+h3 killall sender
+h2 killall tcpclient
