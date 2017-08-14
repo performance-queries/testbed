@@ -28,7 +28,8 @@ from time import sleep
 
 parser = argparse.ArgumentParser(description='Mininet demo')
 parser.add_argument('--behavioral-exe', help='Path to behavioral executable',
-                    type=str, action="store", required=True)
+                    type=str, action="store", required=False,
+                    default="~/behavioral-model/targets/simple_switch/simple_switch")
 parser.add_argument('--thrift-port', help='Thrift server port for table updates',
                     type=int, action="store", default=9090)
 parser.add_argument('--num-hosts', help='Number of hosts to connect to switch',

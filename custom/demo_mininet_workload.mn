@@ -1,11 +1,11 @@
-sh echo "Setting up tables..."
-s1 ~/testbed/custom/setup_tables.sh 3
+#sh echo "Setting up tables..."
+#s1 ~/testbed/custom/setup_tables.sh 3
 sh echo "Starting TCP server on h1..."
 h1 ~/sourdough/examples/tcpserver 40401 &
-sh echo "Starting UDP receiver on h2..."
-h2 ~/sourdough/datagrump/receiver 40402 &
-sh echo "Starting bursty UDP sender on h3, sending to h2..."
-h3 ~/sourdough/datagrump/sender h2 40402 &
+sh echo "Starting UDP receiver on h4..."
+h4 ~/sourdough/datagrump/receiver 40402 &
+sh echo "Starting bursty UDP sender on h3, sending to h4..."
+h3 ~/sourdough/datagrump/sender h4 40402 &
 sh echo "Starting TCP client (1MB RPC from h1) on h2..."
 sh echo "(Printed: RPC response times in ms)"
 h2 ~/sourdough/examples/tcpclient h1 40401

@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ -z $1 ]
+then
+    echo "Usage: size reg_name [second reg_name]"
+    exit 1
+fi
+
+
 size=$1
 sizem1=$((size-1))
 

@@ -5,3 +5,6 @@ table_add smac Set_smac 1 => 00:aa:bb:00:00:00
 table_add ipv4_match Set_nhop 10.0.1.10/32 => 10.0.1.10 2
 table_add dmac Set_dmac 10.0.1.10 => 00:04:00:00:00:01
 table_add smac Set_smac 2 => 00:aa:bb:00:00:01
+table_add ipv4_match Set_nhop 10.0.2.10/32 => 10.0.2.10 3
+table_add dmac Set_dmac 10.0.2.10 => 00:04:00:00:00:02
+table_add smac Set_smac 3 => 00:aa:bb:00:00:02
