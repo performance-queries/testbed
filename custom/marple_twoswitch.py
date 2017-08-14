@@ -23,6 +23,7 @@ from mininet.util import dumpNetConnections
 from p4_mininet import P4Switch, P4Host
 
 import argparse
+import subprocess
 from time import sleep
 
 parser = argparse.ArgumentParser(description='Mininet demo')
@@ -112,10 +113,14 @@ class SingleSwitchTopo(Topo):
 
         h1 = self.addHost('h1', ip = "10.0.0.10/24", mac = "00:04:00:00:00:00")
         h2 = self.addHost('h2', ip = "10.0.1.10/24", mac = "00:04:00:00:00:01")
+        h3 = self.addHost('h3', ip = "10.0.2.10/24", mac = "00:04:00:00:00:02")
+        h4 = self.addHost('h4', ip = "10.0.3.10/24", mac = "00:04:00:00:00:03")
         
         self.addLink(h1, switch)
+        self.addLink(h3, switch)
         self.addLink(switch, switch2)
-        self.addLink(switch2, h2)        
+        self.addLink(switch2, h2)
+        self.addLink(switch2, h4)       
 
 def main():
     num_hosts = args.num_hosts
@@ -140,10 +145,16 @@ def main():
     
     h1 = net.get('h1')
     h2 = net.get('h2')
+    h3 = net.get('h3')
+    h4 = net.get('h4')
     h1.setARP(sw_addr(0), sw_mac(0,0))
     h1.setDefaultRoute("dev eth0 via %s" % sw_addr(0))
     h2.setARP(sw_addr(1), sw_mac(1,1))
     h2.setDefaultRoute("dev eth0 via %s" % sw_addr(1))
+    h3.setARP(sw_addr(2), sw_mac(0,1))
+    h3.setDefaultRoute("dev eth0 via %s" % sw_addr(2))
+    h4.setARP(sw_addr(3), sw_mac(1,2))
+    h4.setDefaultRoute("dev eth0 via %s" % sw_addr(3))
 
     s1 = net.get('s1')
     print 's1-eth1 IP = %s' % s1.intf('s1-eth1').IP()
@@ -153,13 +164,11 @@ def main():
         h.describe()
 
     sleep(1)
+    subprocess.call("~/behavioral-model/targets/simple_switch/sswitch_CLI < table_commands1.txt", shell=True)
+    subprocess.call("~/behavioral-model/targets/simple_switch/sswitch_CLI --thrift-port 9091 < table_commands2.txt", shell=True)
     dumpNetConnections(net)
     print "Ready !"
-    #h1.cmd("sysctl -w net.ipv4.conf.all.rp_filter=0")
-    #h1.cmd("sysctl -w net.ipv4.conf.eth0.rp_filter=0")
 
-    h1.popen("tcpdump -w h1-dump.pcap", shell = True)
-    h2.popen("tcpdump -w h2-dump.pcap", shell = True)
     CLI( net )
     net.stop()
 
