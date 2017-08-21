@@ -57,6 +57,10 @@ type DemoHandler struct {
 func (h *DemoHandler) stopQuery() error {
 	fmt.Printf("Target process: %+v", h.cmd.Process)
 	err := syscall.Kill(-h.cmd.Process.Pid, syscall.SIGKILL)
+	err := h.cmd.Wait()
+	if err != nil {
+		return nil
+	}
 	// Cleanup mininet
 	out, err := exec.Command("/usr/local/bin/mn", "-c").Output()
 	fmt.Println(string(out))
