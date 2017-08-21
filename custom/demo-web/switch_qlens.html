@@ -8,8 +8,8 @@
   var latestUrl = 'qlens_series_latest.png?refresh=';
   
   $(document).ready(function() {
-  window.setInterval("refreshFull();", 3000); // three second interval
-  window.setInterval("refreshLatest();", 2000); // two second interval
+    window.setInterval("refreshFull();", 3000); // three second interval
+    window.setInterval("refreshLatest();", 2000); // two second interval
   });
 
   var forceRefreshFull = 0;
@@ -17,14 +17,14 @@
 
   function refreshFull()
   {
-  forceRefreshFull = forceRefreshFull + 1;
-  $('#fullImage').attr('src', fullUrl + forceRefreshFull);
+    forceRefreshFull = forceRefreshFull + 1;
+    $('#fullImage').attr('src', fullUrl + forceRefreshFull);
   }
 
   function refreshLatest()
   {
-  forceRefreshLatest = forceRefreshLatest + 1;
-  $('#latestImage').attr('src', latestUrl + forceRefreshLatest);
+    forceRefreshLatest = forceRefreshLatest + 1;
+    $('#latestImage').attr('src', latestUrl + forceRefreshLatest);
   }
 </script>
 </head>
