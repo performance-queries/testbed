@@ -5,5 +5,5 @@ then
     echo "Requires JSON file (compiled query) to run"
     exit 1
 fi
-
+echo "Starting marple_twoswitch.py"
 echo "source demo_mininet_workload.mn" | sudo python marple_twoswitch.py --json $1
