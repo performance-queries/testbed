@@ -164,7 +164,7 @@ def main():
         h = net.get('h%d' % (n + 1))
         h.describe()
 
-    sleep(3)
+    sleep(5)
     subprocess.call("~/behavioral-model/targets/simple_switch/sswitch_CLI < table_commands1.txt", shell=True)
     subprocess.call("~/behavioral-model/targets/simple_switch/sswitch_CLI --thrift-port 9091 < table_commands2.txt", shell=True)
     dumpNetConnections(net)

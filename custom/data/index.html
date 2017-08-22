@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head title="Switch queue latency measurements">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  // TODO: Clear up boilerplate code repetition later.
+  var latencyUrl = 'latency.png?refresh=';
+  var packetFullUrl = 'qlens_series_full.png?refresh=';
+  var packetLatestUrl = 'qlens_series_latest.png?refresh=';
+  var flowStatsUrl = 'flow_stats.html?refresh=';
+
+  // Which query is running. 0 = none, 1 = basic, 2 = packet, 3 = flow.
+  var queryRunning = 0;
+
+  $(document).ready(function() {
+    window.setInterval(refresh, 3000); // three second interval
+  });
+
+  var refreshIx = 0;
+
+  function refresh() {
+      refreshIx = refreshIx + 1;
+      if (queryRunning == 1) {
+          $('#latencyImage').attr('src', latencyUrl + refreshIx);
+      }
+      if (queryRunning == 2) {
+          $('#latencyImage').attr('src', latencyUrl + refreshIx);
+          $('#fullImage').attr('src', packetLatestUrl + refreshIx);
+          $('#latestImage').attr('src', packetFullUrl + refreshIx);
+      }
+      if (queryRunning == 3) {
+          $('#latencyImage').attr('src', latencyUrl + refreshIx);
+          $('#flowStats').load(flowStatsUrl + refreshIx);
+      }
+  }
+
+  function setQuery(q) {
+      queryRunning = q;
+      refresh();
+      if (q == 0) {
+          $('#full-div').hide();
+          $('#latest-div').hide();
+          $('#latency-div').hide();
+          $('#flow-table').hide();
+          return;
+      }
+      $('#latency-div').show();
+      if (q == 1) {
+          $('#full-div').hide();
+          $('#latest-div').hide();
+          $('#flow-table').hide();
+          return;
+      }
+      if (q == 2) {
+          $('#full-div').show();
+          $('#latest-div').show();
+          $('#flow-table').hide();
+          return;
+      }
+      if (q == 3) {
+          $('#full-div').hide();
+          $('#latest-div').hide();
+          $('#flow-table').show();
+      }
+  }
+
+  function runBasicSetup() {
+      console.log(queryRunning);
+      if (queryRunning != 0) {
+          return;
+      }
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", "query?type=default", true);
+      xhttp.send();
+      setQuery(1);
+  }
+
+  function runPacketQuery() {
+      if (queryRunning != 0) {
+          return;
+      }
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "query?type=packet", true);
+    xhttp.send();
+    setQuery(2);
+  }
+
+  function runFlowQuery() {
+      if (queryRunning != 0) {
+          return;
+      }
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "query?type=flow", true);
+    xhttp.send();
+    setQuery(3);
+  }
+
+  function stopAllQueries() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "query?type=stop", true);
+    xhttp.send();
+    setQuery(0);
+  }
+</script>
+</head>
+<body>
+  <center>
+    <h1>Diagnosing High Latency with Marple</h1>
+    <hr>
+     <img id="topo" src="mininet-topo.png"/>
+     <br>
+     <button onclick='runBasicSetup();' id="basic">Run Setup</button>
+     <button onclick='runPacketQuery();' id="packetQ">Measure Queueing Latency</button>
+     <button onclick='runFlowQuery();' id="flowQ">Measure Per-Flow Stats</button>
+     <button onclick='stopAllQueries();' id="stopQ">STOP</button>
+
+    <div id="container">
+      <div id="latency-div" style="display:none">
+          <h2>Latency</h2>
+          <img id="latencyImage"/>
+      </div>
+      <div id="full-div" style="display:none">
+        <h2>Long term</h2>
+        <img id="fullImage"/>
+      </div>
+      <div id="latest-div" style="display:none">
+        <h2>Latest</h2>
+        <img id="latestImage"/>
+      </div>
+      <div id="flow-table" style="display:none">
+          <h2>Per-Flow Stats</h2>
+          <div id="flowStats"/>
+      </div>
+    </div>
+  </center>
+</body>
+</html>

@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"strings"
 	"syscall"
-	"time"
 )
 
 var defaultDemoHandler = &DemoHandler{}
@@ -38,7 +37,7 @@ var perPacketQuery = Query{
 	Name:         "Per Packet Queueing Latencies",
 	Graph:        true,
 	Switch:       9090,
-	File:         "per_packet_query/per_packet_query.json",
+	File:         "per_packet_query/per_packet_queue_lengths.json",
 	Output:       "packet_qlens.png",
 	CollectorCmd: []string{"./record_register_continuous.sh", "1024", "qlens", "times"},
 }
@@ -58,16 +57,27 @@ type DemoHandler struct {
 	cmds []*exec.Cmd
 }
 
+func cleanupFiles() {
+	os.Remove("data/latency.png")
+	os.Remove("data/qlens_series_full.png")
+	os.Remove("data/qlens_series_latest.png")
+	os.Remove("data/flow_stats.html")
+}
+
 func (h *DemoHandler) stopQuery() error {
 	for _, cmd := range h.cmds {
-		syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-		cmd.Wait()
+		if cmd != nil && cmd.Process != nil {
+			syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+			cmd.Wait()
+		}
 	}
 	// Cleanup mininet
 	out, err := exec.Command("/usr/local/bin/mn", "-c").Output()
 	fmt.Println(string(out))
 	h.cmds = []*exec.Cmd{}
-	fmt.Printf("Stopping query...\n", err)
+	fmt.Printf("Query stopped...")
+	cleanupFiles()
+	fmt.Println("Files cleaned up.")
 	return err
 }
 
@@ -87,21 +97,29 @@ func (h *DemoHandler) runSwitch(jf string) {
 	fmt.Printf("Process details: %+v", cmd.Process)
 }
 
-func (h *DemoHandler) launchCollector(args []string) {
-	cmd = exec.Command(args...)
+func (h *DemoHandler) launchCollector(args []string) *exec.Cmd {
+	cmd := exec.Command(args[0], args[1:]...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	h.cmds = append(h.cmds, cmd)
-	cmd.Start()
+	return cmd
 }
 
 func (h *DemoHandler) launchCollectors(q Query) {
-	time.Sleep(5 * time.Second)
-	launchCollector([]string{"./record_latency.sh"})
-	launchCollector(q.CollectorCmd)
+	cmd1 := h.launchCollector([]string{"./record_latency_continuous.sh"})
+	var cmd2 *exec.Cmd
+	if len(q.CollectorCmd) > 0 {
+		cmd2 = h.launchCollector(q.CollectorCmd)
+	}
+	cmd1.Start()
+	if cmd2 != nil {
+		cmd2.Start()
+	}
 }
 
 func (h *DemoHandler) startQuery(q Query) error {
-	if h.cmd != nil {
+	if len(h.cmds) > 0 {
 		// This means the previous query hasn't yet terminated.
 		return fmt.Errorf("Previous query has not been terminated")
 	}
@@ -109,7 +127,7 @@ func (h *DemoHandler) startQuery(q Query) error {
 	h.runSwitch(q.File)
 	// Launch collector in the background. The collector
 	// updates the graphs.
-	go h.launchCollectors(q)
+	h.launchCollectors(q)
 	fmt.Println("Launched mininet demo")
 	return nil
 }
@@ -133,6 +151,13 @@ func (h *DemoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		err = h.startQuery(perPacketQuery)
 	case "stop":
 		err = h.stopQuery()
+	default:
+		// Just run the plain switch if it's not already running
+		if len(h.cmds) == 0 {
+			h.runSwitch(perFlowQuery.File)
+			cmd1 := h.launchCollector([]string{"./record_latency_continuous.sh"})
+			cmd1.Start()
+		}
 	}
 	// Report an error to the client
 	if err != nil {

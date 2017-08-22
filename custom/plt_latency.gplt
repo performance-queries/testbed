@@ -1,6 +1,0 @@
-# outfile and infile must be provided as arguments to gnuplot through the -e switch!
-set terminal png
-set output outfile
-set xlabel "Timestamp (s)"
-set ylabel "Fetch Latency (ms)"
-plot infile using 2:1 with lines title ""

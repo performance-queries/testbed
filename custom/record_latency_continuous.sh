@@ -11,7 +11,7 @@ do
     # Plot latest file
     python parse_latency.py $outFile > parsed_latencies.txt
     echo "Plotting latest snapshot"
-    gnuplot -e "infile='parsed_latencies.txt';outfile='demo-web/latency.png'" plot_latency.gplt
+    gnuplot -e "infile='parsed_latencies.txt';outfile='data/latency.png'" plot_latency.gplt
     # Figure out if full time series should be reparsed and updated
     sleep $snapshot_time_sec
 done

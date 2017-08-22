@@ -11,6 +11,6 @@ do
     ./record_register.sh 1024 regV_result_total_time
     ./record_register.sh 1024 regV_result_total_size
     ./record_register.sh 1024 regV_result_num_bursts
-    python demo_interpret_register_results.py > demo-web/interpreted_results.html
-sleep 5
+    python demo_interpret_register_results.py > data/flow_stats.html
+sleep 2
 done
