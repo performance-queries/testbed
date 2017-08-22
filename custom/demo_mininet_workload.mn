@@ -8,4 +8,4 @@ sh echo "Starting bursty UDP sender on h3, sending to h4..."
 h3 ~/sourdough/datagrump/sender h4 40402 &
 sh echo "Starting TCP client (1MB RPC from h1) on h2..."
 sh echo "(Printed: RPC response times in ms)"
-h2 ~/sourdough/examples/tcpclient h1 40401
+h2 ~/sourdough/examples/tcpclient h1 40401 > live_latency.txt

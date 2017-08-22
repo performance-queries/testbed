@@ -30,44 +30,44 @@ type Query struct {
 	File string
 	// Location of generated graph
 	Output string
+	// The command to run for the collector.
+	CollectorCmd []string
 }
 
 var perPacketQuery = Query{
-	Name:   "Per Packet Queueing Latencies",
-	Graph:  true,
-	Switch: 9090,
-	File:   "per_packet_query/per_packet_query.json",
-	Output: "packet_qlens.png",
+	Name:         "Per Packet Queueing Latencies",
+	Graph:        true,
+	Switch:       9090,
+	File:         "per_packet_query/per_packet_query.json",
+	Output:       "packet_qlens.png",
+	CollectorCmd: []string{"./record_register_continuous.sh", "1024", "qlens", "times"},
 }
 
 var perFlowQuery = Query{
-	Name:   "Flow statistics",
-	Graph:  false,
-	Switch: 9090,
-	File:   "per_flow_query/per_flow_bursts.json",
-	Output: "per_flow.txt",
+	Name:         "Flow statistics",
+	Graph:        false,
+	Switch:       9090,
+	File:         "per_flow_query/per_flow_bursts.json",
+	Output:       "per_flow.txt",
+	CollectorCmd: []string{"./demo_5tuple_record_registers.sh"},
 }
 
 // Impelemnts http.Handler
 type DemoHandler struct {
-	// The current running query.
-	cmd *exec.Cmd
+	// The current running query, along with all the collectors.
+	cmds []*exec.Cmd
 }
 
 func (h *DemoHandler) stopQuery() error {
-	fmt.Printf("Target process: %+v", h.cmd.Process)
-	err := syscall.Kill(-h.cmd.Process.Pid, syscall.SIGKILL)
-	err := h.cmd.Wait()
-	if err != nil {
-		return nil
+	for _, cmd := range h.cmds {
+		syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		cmd.Wait()
 	}
 	// Cleanup mininet
 	out, err := exec.Command("/usr/local/bin/mn", "-c").Output()
 	fmt.Println(string(out))
-	if err == nil {
-		h.cmd = nil
-	}
-	fmt.Printf("Stopping query with error %v", err)
+	h.cmds = []*exec.Cmd{}
+	fmt.Printf("Stopping query...\n", err)
 	return err
 }
 
@@ -76,17 +76,28 @@ func (h *DemoHandler) runSwitch(jf string) {
 	cmd := exec.Command("./run_demo.sh", jf)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	// Need this so the child process has a separate process group ID.
+	// Then we can kill it from this program. If it had the same PGID,
+	// the kill command usually kills itself first. womp.
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	h.cmd = cmd
-	h.cmd.Start()
+	h.cmds = append(h.cmds, cmd)
+	cmd.Start()
 
-	fmt.Printf("Started command at path %s", h.cmd.Path)
-	fmt.Printf("Process details: %+v", h.cmd.Process)
+	fmt.Printf("Started command at path %s", cmd.Path)
+	fmt.Printf("Process details: %+v", cmd.Process)
 }
 
-func (h *DemoHandler) runCollector(q Query) {
+func (h *DemoHandler) launchCollector(args []string) {
+	cmd = exec.Command(args...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	h.cmds = append(h.cmds, cmd)
+	cmd.Start()
+}
+
+func (h *DemoHandler) launchCollectors(q Query) {
 	time.Sleep(5 * time.Second)
-	exec.Command("./record_register_continuous.sh", "1024", "qlens", "times")
+	launchCollector([]string{"./record_latency.sh"})
+	launchCollector(q.CollectorCmd)
 }
 
 func (h *DemoHandler) startQuery(q Query) error {
@@ -98,7 +109,7 @@ func (h *DemoHandler) startQuery(q Query) error {
 	h.runSwitch(q.File)
 	// Launch collector in the background. The collector
 	// updates the graphs.
-	//go h.runCollector(q)
+	go h.launchCollectors(q)
 	fmt.Println("Launched mininet demo")
 	return nil
 }
