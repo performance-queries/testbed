@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head title="Switch queue latency measurements">
+<style>
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
   // TODO: Clear up boilerplate code repetition later.
@@ -11,6 +17,17 @@
 
   // Which query is running. 0 = none, 1 = basic, 2 = packet, 3 = flow.
   var queryRunning = 0;
+
+  var packetQueryText = "result = filter(pktstream, srcip == h1 and dstip == h2)";
+  var flowQueryText = "def burst_stats([last_time, nburst, time], [pkts, tin]):<br>" +
+  "&nbsp;&nbsp;if tin - last_time > 800000:<br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;nbursts++;<br>" +
+  "&nbsp;&nbsp;&nbsp;&nbsp;emit();<br>" +
+  "&nbsp;&nbsp;else:<br>" +
+  "&nbsp;&nbsp;time = time + tin - last_time;<br>" +
+  "&nbsp;&nbsp;pkts = pkts + 1;<br>" +
+  "&nbsp;&nbsp;last_time = tin;<br>" +
+  "result = groupby(R1, 5tuple, burst_stats)";
 
   $(document).ready(function() {
     window.setInterval(refresh, 3000); // three second interval
@@ -25,12 +42,19 @@
       }
       if (queryRunning == 2) {
           $('#latencyImage').attr('src', latencyUrl + refreshIx);
-          $('#fullImage').attr('src', packetLatestUrl + refreshIx);
-          $('#latestImage').attr('src', packetFullUrl + refreshIx);
+          $('#fullImage').attr('src', packetFullUrl + refreshIx);
+          $('#latestImage').attr('src', packetLatestUrl + refreshIx);
       }
       if (queryRunning == 3) {
           $('#latencyImage').attr('src', latencyUrl + refreshIx);
           $('#flowStats').load(flowStatsUrl + refreshIx);
+      }
+      if (queryRunning == 0) {
+          // Reset images so that we don't see stale images.
+          $('#latencyImage').attr('src', '');
+          $('#fullImage').attr('src', '');
+          $('#latestImage').attr('src', '');
+          $('#flowStats').load('');
       }
   }
 
@@ -42,6 +66,7 @@
           $('#latest-div').hide();
           $('#latency-div').hide();
           $('#flow-table').hide();
+          $('#query-div').hide();
           return;
       }
       $('#latency-div').show();
@@ -49,18 +74,23 @@
           $('#full-div').hide();
           $('#latest-div').hide();
           $('#flow-table').hide();
+          $('#query-div').hide();
           return;
       }
       if (q == 2) {
           $('#full-div').show();
           $('#latest-div').show();
           $('#flow-table').hide();
+          $('#query-div').show();
+          document.getElementById('query-code').innerHTML = packetQueryText;
           return;
       }
       if (q == 3) {
           $('#full-div').hide();
           $('#latest-div').hide();
           $('#flow-table').show();
+          $('#query-div').show();
+          document.getElementById('query-code').innerHTML = flowQueryText;
       }
   }
 
@@ -113,23 +143,29 @@
      <button onclick='runPacketQuery();' id="packetQ">Measure Queueing Latency</button>
      <button onclick='runFlowQuery();' id="flowQ">Measure Per-Flow Stats</button>
      <button onclick='stopAllQueries();' id="stopQ">STOP</button>
-
-    <div id="container">
+    <div id="query-div" style="text-align: center" >
+        <p style="display: inline-block" align="left"><code id="query-code"></code></p>
+    </div>
+    <div id="container-left" style="width: 50%; float: left">
       <div id="latency-div" style="display:none">
           <h2>Latency</h2>
           <img id="latencyImage"/>
       </div>
+    </div>
+    <div id="container-right" style="width: 50%; float: right">
       <div id="full-div" style="display:none">
         <h2>Long term</h2>
         <img id="fullImage"/>
       </div>
-      <div id="latest-div" style="display:none">
-        <h2>Latest</h2>
-        <img id="latestImage"/>
-      </div>
       <div id="flow-table" style="display:none">
           <h2>Per-Flow Stats</h2>
           <div id="flowStats"/>
+      </div>
+    </div>
+    <div id="container-bottom">
+      <div id="latest-div" style="display:none">
+        <h2>Latest</h2>
+        <img id="latestImage"/>
       </div>
     </div>
   </center>

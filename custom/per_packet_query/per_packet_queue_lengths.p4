@@ -249,7 +249,7 @@ control Eg(inout Headers hdrs,
 	action update_R() {
         bit<32> ix;
         idx.read(ix, 0);
-        bit<32> delta = (hdrs.ip.dstAddr == 167772426) ? 32w1 : 32w0;
+        bit<32> delta = (standard_meta.egress_port == 3) ? 32w1 : 32w0;
         bit<32> writeix = (delta * ix) + delta;
         qlens.write(writeix, (bit<32>)meta.queueing_metadata.enq_qdepth);
         times.write(writeix, (bit<32>)meta.queueing_metadata.enq_timestamp);
