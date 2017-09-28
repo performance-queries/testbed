@@ -1,5 +1,5 @@
 {
-  "program" : "/home/ubuntu/testbed/mininet/custom/per_packet_queue_lengths.p4",
+  "program" : "outputs/p4/per_packet_queue_lengths.p4",
   "__meta__" : {
     "version" : [2, 1]
   },
@@ -66,21 +66,11 @@
         ["nextHop_3", 32, false],
         ["nextHop_0", 32, false],
         ["ix", 32, false],
-        ["delta", 32, false],
-        ["writeix", 32, false],
-        ["nextid", 32, false],
-        ["tmp_10", 32, false],
-        ["tmp_11", 1, 0],
-        ["tmp_12", 32, false],
-        ["tmp_13", 32, false],
-        ["tmp_14", 32, false],
-        ["tmp_15", 32, false],
-        ["tmp_16", 1, 0],
-        ["tmp_17", 32, false],
-        ["tmp_18", 32, false],
-        ["tmp_19", 32, false],
-        ["tmp_20", 32, false],
-        ["_padding_0", 6, false]
+        ["tmp_4", 32, false],
+        ["tmp_5", 32, false],
+        ["tmp_6", 32, false],
+        ["tmp_7", 32, false],
+        ["tmp_8", 32, false]
       ]
     },
     {
@@ -135,7 +125,7 @@
         ["drop", 1, false],
         ["recirculate_port", 16, false],
         ["packet_length", 32, false],
-        ["_padding_1", 4, false]
+        ["_padding_0", 4, false]
       ]
     }
   ],
@@ -359,14 +349,8 @@
       "bitwidth" : 32
     },
     {
-      "name" : "times",
-      "id" : 1,
-      "size" : 10000,
-      "bitwidth" : 32
-    },
-    {
       "name" : "idx",
-      "id" : 2,
+      "id" : 1,
       "size" : 1,
       "bitwidth" : 32
     }
@@ -439,7 +423,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_10"]
+              "value" : ["scalars", "tmp_4"]
             },
             {
               "type" : "register_array",
@@ -460,645 +444,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_10"]
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_11"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "b2d",
-                  "left" : null,
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "==",
-                      "left" : {
-                        "type" : "field",
-                        "value" : ["ip", "dstAddr"]
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0a00010a"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_12"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "hexstr",
-                    "value" : "0x00000001"
-                  },
-                  "right" : {
-                    "type" : "field",
-                    "value" : ["scalars", "tmp_12"]
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "==",
-                      "left" : {
-                        "type" : "field",
-                        "value" : ["ip", "dstAddr"]
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0a00010a"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_12"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "hexstr",
-                    "value" : "0x00000000"
-                  },
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "?",
-                      "left" : {
-                        "type" : "hexstr",
-                        "value" : "0x00000001"
-                      },
-                      "right" : {
-                        "type" : "field",
-                        "value" : ["scalars", "tmp_12"]
-                      },
-                      "cond" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["ip", "dstAddr"]
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0a00010a"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "not",
-                      "left" : null,
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["ip", "dstAddr"]
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0a00010a"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "delta"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "hexstr",
-                    "value" : "0x00000000"
-                  },
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "?",
-                      "left" : {
-                        "type" : "hexstr",
-                        "value" : "0x00000001"
-                      },
-                      "right" : {
-                        "type" : "field",
-                        "value" : ["scalars", "tmp_12"]
-                      },
-                      "cond" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["ip", "dstAddr"]
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0a00010a"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "not",
-                      "left" : null,
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["ip", "dstAddr"]
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0a00010a"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_13"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "*",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "field",
-                        "value" : ["scalars", "tmp_10"]
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_14"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "+",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "*",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000000"
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000001"
-                                      },
-                                      "right" : {
-                                        "type" : "field",
-                                        "value" : ["scalars", "tmp_12"]
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "not",
-                                      "left" : null,
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_10"]
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "writeix"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "+",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "*",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000000"
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000001"
-                                      },
-                                      "right" : {
-                                        "type" : "field",
-                                        "value" : ["scalars", "tmp_12"]
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "not",
-                                      "left" : null,
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_10"]
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
+              "value" : ["scalars", "tmp_4"]
             }
           ]
         },
@@ -1110,161 +456,8 @@
               "value" : "qlens"
             },
             {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "+",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "*",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000000"
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000001"
-                                      },
-                                      "right" : {
-                                        "type" : "field",
-                                        "value" : ["scalars", "tmp_12"]
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "not",
-                                      "left" : null,
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_10"]
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
+              "type" : "field",
+              "value" : ["scalars", "tmp_4"]
             },
             {
               "type" : "expression",
@@ -1286,194 +479,11 @@
           ]
         },
         {
-          "op" : "register_write",
-          "parameters" : [
-            {
-              "type" : "register_array",
-              "value" : "times"
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "+",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "*",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000000"
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000001"
-                                      },
-                                      "right" : {
-                                        "type" : "field",
-                                        "value" : ["scalars", "tmp_12"]
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "not",
-                                      "left" : null,
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_10"]
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "field",
-                    "value" : ["queueing_metadata", "enq_timestamp"]
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
           "op" : "modify_field",
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_15"]
+              "value" : ["scalars", "tmp_5"]
             },
             {
               "type" : "expression",
@@ -1487,978 +497,17 @@
                       "op" : "+",
                       "left" : {
                         "type" : "field",
-                        "value" : ["scalars", "tmp_10"]
+                        "value" : ["scalars", "tmp_4"]
                       },
                       "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
+                        "type" : "hexstr",
+                        "value" : "0x00000001"
                       }
                     }
                   },
                   "right" : {
                     "type" : "hexstr",
                     "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "nextid"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "+",
-                      "left" : {
-                        "type" : "field",
-                        "value" : ["scalars", "tmp_10"]
-                      },
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "?",
-                          "left" : {
-                            "type" : "hexstr",
-                            "value" : "0x00000000"
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000001"
-                              },
-                              "right" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_12"]
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "cond" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "not",
-                              "left" : null,
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "==",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["ip", "dstAddr"]
-                                  },
-                                  "right" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x0a00010a"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_16"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "b2d",
-                  "left" : null,
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "==",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "+",
-                              "left" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_10"]
-                              },
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000000"
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000001"
-                                      },
-                                      "right" : {
-                                        "type" : "field",
-                                        "value" : ["scalars", "tmp_12"]
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "not",
-                                      "left" : null,
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0000270f"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_17"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "hexstr",
-                    "value" : "0x00000000"
-                  },
-                  "right" : {
-                    "type" : "field",
-                    "value" : ["scalars", "tmp_17"]
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "==",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "+",
-                              "left" : {
-                                "type" : "field",
-                                "value" : ["scalars", "tmp_10"]
-                              },
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000000"
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000001"
-                                      },
-                                      "right" : {
-                                        "type" : "field",
-                                        "value" : ["scalars", "tmp_12"]
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "not",
-                                      "left" : null,
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "==",
-                                          "left" : {
-                                            "type" : "field",
-                                            "value" : ["ip", "dstAddr"]
-                                          },
-                                          "right" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x0a00010a"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0000270f"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_17"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "&",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "+",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["scalars", "tmp_10"]
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000000"
-                              },
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000001"
-                                  },
-                                  "right" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_12"]
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "==",
-                                      "left" : {
-                                        "type" : "field",
-                                        "value" : ["ip", "dstAddr"]
-                                      },
-                                      "right" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x0a00010a"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "not",
-                                  "left" : null,
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "==",
-                                      "left" : {
-                                        "type" : "field",
-                                        "value" : ["ip", "dstAddr"]
-                                      },
-                                      "right" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x0a00010a"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0xffffffff"
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "?",
-                      "left" : {
-                        "type" : "hexstr",
-                        "value" : "0x00000000"
-                      },
-                      "right" : {
-                        "type" : "field",
-                        "value" : ["scalars", "tmp_17"]
-                      },
-                      "cond" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "&",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "+",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_10"]
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000000"
-                                      },
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "?",
-                                          "left" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x00000001"
-                                          },
-                                          "right" : {
-                                            "type" : "field",
-                                            "value" : ["scalars", "tmp_12"]
-                                          },
-                                          "cond" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "not",
-                                          "left" : null,
-                                          "right" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "hexstr",
-                                "value" : "0xffffffff"
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0000270f"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "not",
-                      "left" : null,
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "&",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "+",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_10"]
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000000"
-                                      },
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "?",
-                                          "left" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x00000001"
-                                          },
-                                          "right" : {
-                                            "type" : "field",
-                                            "value" : ["scalars", "tmp_12"]
-                                          },
-                                          "cond" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "not",
-                                          "left" : null,
-                                          "right" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "hexstr",
-                                "value" : "0xffffffff"
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0000270f"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "nextid"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "&",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "+",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["scalars", "tmp_10"]
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000000"
-                              },
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000001"
-                                  },
-                                  "right" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_12"]
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "==",
-                                      "left" : {
-                                        "type" : "field",
-                                        "value" : ["ip", "dstAddr"]
-                                      },
-                                      "right" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x0a00010a"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "not",
-                                  "left" : null,
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "==",
-                                      "left" : {
-                                        "type" : "field",
-                                        "value" : ["ip", "dstAddr"]
-                                      },
-                                      "right" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x0a00010a"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0xffffffff"
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "?",
-                      "left" : {
-                        "type" : "hexstr",
-                        "value" : "0x00000000"
-                      },
-                      "right" : {
-                        "type" : "field",
-                        "value" : ["scalars", "tmp_17"]
-                      },
-                      "cond" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "&",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "+",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_10"]
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000000"
-                                      },
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "?",
-                                          "left" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x00000001"
-                                          },
-                                          "right" : {
-                                            "type" : "field",
-                                            "value" : ["scalars", "tmp_12"]
-                                          },
-                                          "cond" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "not",
-                                          "left" : null,
-                                          "right" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "hexstr",
-                                "value" : "0xffffffff"
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0000270f"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "not",
-                      "left" : null,
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "&",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "+",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_10"]
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000000"
-                                      },
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "?",
-                                          "left" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x00000001"
-                                          },
-                                          "right" : {
-                                            "type" : "field",
-                                            "value" : ["scalars", "tmp_12"]
-                                          },
-                                          "cond" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "not",
-                                          "left" : null,
-                                          "right" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "hexstr",
-                                "value" : "0xffffffff"
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0000270f"
-                          }
-                        }
-                      }
-                    }
                   }
                 }
               }
@@ -2481,394 +530,18 @@
               "value" : {
                 "type" : "expression",
                 "value" : {
-                  "op" : "?",
+                  "op" : "&",
                   "left" : {
                     "type" : "expression",
                     "value" : {
-                      "op" : "&",
+                      "op" : "+",
                       "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "+",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["scalars", "tmp_10"]
-                          },
-                          "right" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "?",
-                              "left" : {
-                                "type" : "hexstr",
-                                "value" : "0x00000000"
-                              },
-                              "right" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "?",
-                                  "left" : {
-                                    "type" : "hexstr",
-                                    "value" : "0x00000001"
-                                  },
-                                  "right" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_12"]
-                                  },
-                                  "cond" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "==",
-                                      "left" : {
-                                        "type" : "field",
-                                        "value" : ["ip", "dstAddr"]
-                                      },
-                                      "right" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x0a00010a"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "cond" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "not",
-                                  "left" : null,
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "==",
-                                      "left" : {
-                                        "type" : "field",
-                                        "value" : ["ip", "dstAddr"]
-                                      },
-                                      "right" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x0a00010a"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0xffffffff"
-                      }
-                    }
-                  },
-                  "right" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "?",
-                      "left" : {
-                        "type" : "hexstr",
-                        "value" : "0x00000000"
-                      },
-                      "right" : {
                         "type" : "field",
-                        "value" : ["scalars", "tmp_17"]
-                      },
-                      "cond" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "&",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "+",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_10"]
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000000"
-                                      },
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "?",
-                                          "left" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x00000001"
-                                          },
-                                          "right" : {
-                                            "type" : "field",
-                                            "value" : ["scalars", "tmp_12"]
-                                          },
-                                          "cond" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "not",
-                                          "left" : null,
-                                          "right" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "hexstr",
-                                "value" : "0xffffffff"
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0000270f"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "not",
-                      "left" : null,
-                      "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "==",
-                          "left" : {
-                            "type" : "expression",
-                            "value" : {
-                              "op" : "&",
-                              "left" : {
-                                "type" : "expression",
-                                "value" : {
-                                  "op" : "+",
-                                  "left" : {
-                                    "type" : "field",
-                                    "value" : ["scalars", "tmp_10"]
-                                  },
-                                  "right" : {
-                                    "type" : "expression",
-                                    "value" : {
-                                      "op" : "?",
-                                      "left" : {
-                                        "type" : "hexstr",
-                                        "value" : "0x00000000"
-                                      },
-                                      "right" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "?",
-                                          "left" : {
-                                            "type" : "hexstr",
-                                            "value" : "0x00000001"
-                                          },
-                                          "right" : {
-                                            "type" : "field",
-                                            "value" : ["scalars", "tmp_12"]
-                                          },
-                                          "cond" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "cond" : {
-                                        "type" : "expression",
-                                        "value" : {
-                                          "op" : "not",
-                                          "left" : null,
-                                          "right" : {
-                                            "type" : "expression",
-                                            "value" : {
-                                              "op" : "==",
-                                              "left" : {
-                                                "type" : "field",
-                                                "value" : ["ip", "dstAddr"]
-                                              },
-                                              "right" : {
-                                                "type" : "hexstr",
-                                                "value" : "0x0a00010a"
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "right" : {
-                                "type" : "hexstr",
-                                "value" : "0xffffffff"
-                              }
-                            }
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0x0000270f"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name" : "act_2",
-      "id" : 2,
-      "runtime_data" : [],
-      "primitives" : [
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["common_meta", "switchId"]
-            },
-            {
-              "type" : "hexstr",
-              "value" : "0x00000001"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name" : "act_1",
-      "id" : 3,
-      "runtime_data" : [],
-      "primitives" : [
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_18"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "field",
-                    "value" : ["udp", "length_"]
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name" : "act_0",
-      "id" : 4,
-      "runtime_data" : [],
-      "primitives" : [
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_19"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "-",
-                      "left" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["ip", "packet_length"]
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
+                        "value" : ["scalars", "tmp_4"]
                       },
                       "right" : {
-                        "type" : "expression",
-                        "value" : {
-                          "op" : "&",
-                          "left" : {
-                            "type" : "field",
-                            "value" : ["tcp", "dataOffset"]
-                          },
-                          "right" : {
-                            "type" : "hexstr",
-                            "value" : "0xffffffff"
-                          }
-                        }
+                        "type" : "hexstr",
+                        "value" : "0x00000001"
                       }
                     }
                   },
@@ -2878,52 +551,6 @@
                   }
                 }
               }
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_18"]
-            },
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_19"]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name" : "act",
-      "id" : 5,
-      "runtime_data" : [],
-      "primitives" : [
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "nextHop_1"]
-            },
-            {
-              "type" : "field",
-              "value" : ["scalars", "nextHop_2"]
-            }
-          ]
-        },
-        {
-          "op" : "modify_field",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "nextHop_3"]
-            },
-            {
-              "type" : "field",
-              "value" : ["scalars", "nextHop_1"]
             }
           ]
         }
@@ -2931,7 +558,7 @@
     },
     {
       "name" : "act_3",
-      "id" : 6,
+      "id" : 2,
       "runtime_data" : [],
       "primitives" : [
         {
@@ -2943,7 +570,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_18"]
+              "value" : ["scalars", "tmp_6"]
             }
           ]
         },
@@ -2952,7 +579,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_20"]
+              "value" : ["scalars", "tmp_8"]
             },
             {
               "type" : "expression",
@@ -3012,7 +639,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_20"]
+              "value" : ["scalars", "tmp_8"]
             }
           ]
         },
@@ -3033,7 +660,7 @@
     },
     {
       "name" : "Set_smac",
-      "id" : 7,
+      "id" : 3,
       "runtime_data" : [
         {
           "name" : "smac",
@@ -3058,7 +685,7 @@
     },
     {
       "name" : "Set_dmac",
-      "id" : 8,
+      "id" : 4,
       "runtime_data" : [
         {
           "name" : "dmac",
@@ -3083,6 +710,86 @@
     },
     {
       "name" : "Drop_action",
+      "id" : 5,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "modify_field",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "drop"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "Drop_action",
+      "id" : 6,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "modify_field",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "drop"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "Drop_action",
+      "id" : 7,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "modify_field",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "drop"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "act_2",
+      "id" : 8,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "modify_field",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["common_meta", "switchId"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000001"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "act_1",
       "id" : 9,
       "runtime_data" : [],
       "primitives" : [
@@ -3091,18 +798,31 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["standard_metadata", "drop"]
+              "value" : ["scalars", "tmp_6"]
             },
             {
-              "type" : "hexstr",
-              "value" : "0x01"
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["udp", "length_"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffffffff"
+                  }
+                }
+              }
             }
           ]
         }
       ]
     },
     {
-      "name" : "Drop_action",
+      "name" : "act_0",
       "id" : 10,
       "runtime_data" : [],
       "primitives" : [
@@ -3111,18 +831,74 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["standard_metadata", "drop"]
+              "value" : ["scalars", "tmp_7"]
             },
             {
-              "type" : "hexstr",
-              "value" : "0x01"
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "-",
+                      "left" : {
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "&",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["ip", "packet_length"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0xffffffff"
+                          }
+                        }
+                      },
+                      "right" : {
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "&",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["tcp", "dataOffset"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0xffffffff"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffffffff"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "op" : "modify_field",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_6"]
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_7"]
             }
           ]
         }
       ]
     },
     {
-      "name" : "Drop_action",
+      "name" : "act",
       "id" : 11,
       "runtime_data" : [],
       "primitives" : [
@@ -3131,11 +907,24 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["standard_metadata", "drop"]
+              "value" : ["scalars", "nextHop_1"]
             },
             {
-              "type" : "hexstr",
-              "value" : "0x01"
+              "type" : "field",
+              "value" : ["scalars", "nextHop_2"]
+            }
+          ]
+        },
+        {
+          "op" : "modify_field",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "nextHop_3"]
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "nextHop_1"]
             }
           ]
         }
@@ -3175,7 +964,7 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [11, 0],
+          "action_ids" : [7, 0],
           "actions" : ["Drop_action", "Set_nhop"],
           "base_default_next" : "tbl_act",
           "next_tables" : {
@@ -3183,7 +972,7 @@
             "Set_nhop" : "tbl_act"
           },
           "default_entry" : {
-            "action_id" : 11,
+            "action_id" : 7,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : false
@@ -3199,14 +988,14 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [5],
+          "action_ids" : [11],
           "actions" : ["act"],
           "base_default_next" : "dmac",
           "next_tables" : {
             "act" : "dmac"
           },
           "default_entry" : {
-            "action_id" : 5,
+            "action_id" : 11,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : true
@@ -3228,7 +1017,7 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [10, 8],
+          "action_ids" : [6, 4],
           "actions" : ["Drop_action", "Set_dmac"],
           "base_default_next" : "smac",
           "next_tables" : {
@@ -3236,7 +1025,7 @@
             "Set_dmac" : "smac"
           },
           "default_entry" : {
-            "action_id" : 10,
+            "action_id" : 6,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : false
@@ -3258,7 +1047,7 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [9, 7],
+          "action_ids" : [5, 3],
           "actions" : ["Drop_action", "Set_smac"],
           "base_default_next" : "Ing.exit",
           "next_tables" : {
@@ -3266,7 +1055,7 @@
             "Set_smac" : "Ing.exit"
           },
           "default_entry" : {
-            "action_id" : 9,
+            "action_id" : 5,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : false
@@ -3312,14 +1101,14 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [2],
+          "action_ids" : [8],
           "actions" : ["act_2"],
           "base_default_next" : "node_9",
           "next_tables" : {
             "act_2" : "node_9"
           },
           "default_entry" : {
-            "action_id" : 2,
+            "action_id" : 8,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : true
@@ -3335,14 +1124,14 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [4],
+          "action_ids" : [10],
           "actions" : ["act_0"],
           "base_default_next" : "tbl_act_3",
           "next_tables" : {
             "act_0" : "tbl_act_3"
           },
           "default_entry" : {
-            "action_id" : 4,
+            "action_id" : 10,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : true
@@ -3358,14 +1147,14 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [3],
+          "action_ids" : [9],
           "actions" : ["act_1"],
           "base_default_next" : "tbl_act_3",
           "next_tables" : {
             "act_1" : "tbl_act_3"
           },
           "default_entry" : {
-            "action_id" : 3,
+            "action_id" : 9,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : true
@@ -3381,14 +1170,14 @@
           "with_counters" : false,
           "support_timeout" : false,
           "direct_meters" : null,
-          "action_ids" : [6],
+          "action_ids" : [2],
           "actions" : ["act_3"],
           "base_default_next" : "tbl_update_R",
           "next_tables" : {
             "act_3" : "tbl_update_R"
           },
           "default_entry" : {
-            "action_id" : 6,
+            "action_id" : 2,
             "action_const" : false,
             "action_data" : [],
             "action_entry_const" : true

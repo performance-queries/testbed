@@ -1,0 +1,3 @@
+Using Thrift port 9091
+Could not connect to thrift client on port 9091
+Make sure the switch is running and that you have the right port

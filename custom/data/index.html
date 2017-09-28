@@ -11,8 +11,10 @@ img {
 <script>
   // TODO: Clear up boilerplate code repetition later.
   var latencyUrl = 'latency.png?refresh=';
-  var packetFullUrl = 'qlens_series_full.png?refresh=';
-  var packetLatestUrl = 'qlens_series_latest.png?refresh=';
+  // Graph of all queueing latencies at switches 1 and 2 respectively.
+  var packetFullUrl = 'qlens_series_full_9090.png?refresh=';
+  var packetFullUrl2 = 'qlens_series_full_9091.png?refresh=';
+  //var packetLatestUrl = 'qlens_series_latest_9091.png?refresh=';
   var flowStatsUrl = 'flow_stats.html?refresh=';
 
   // Which query is running. 0 = none, 1 = basic, 2 = packet, 3 = flow.
@@ -36,6 +38,7 @@ img {
   var refreshIx = 0;
 
   function refresh() {
+      console.log("Refreshing...");
       refreshIx = refreshIx + 1;
       if (queryRunning == 1) {
           $('#latencyImage').attr('src', latencyUrl + refreshIx);
@@ -43,27 +46,26 @@ img {
       if (queryRunning == 2) {
           $('#latencyImage').attr('src', latencyUrl + refreshIx);
           $('#fullImage').attr('src', packetFullUrl + refreshIx);
-          $('#latestImage').attr('src', packetLatestUrl + refreshIx);
+          $('#fullImage2').attr('src', packetFullUrl2 + refreshIx);
       }
       if (queryRunning == 3) {
           $('#latencyImage').attr('src', latencyUrl + refreshIx);
           $('#flowStats').load(flowStatsUrl + refreshIx);
       }
-      if (queryRunning == 0) {
+      /*if (queryRunning == 0) {
           // Reset images so that we don't see stale images.
           $('#latencyImage').attr('src', '');
           $('#fullImage').attr('src', '');
-          $('#latestImage').attr('src', '');
+          $('#fullImage2').attr('src', '');
           $('#flowStats').load('');
-      }
+      }*/
   }
 
   function setQuery(q) {
       queryRunning = q;
-      refresh();
       if (q == 0) {
           $('#full-div').hide();
-          $('#latest-div').hide();
+          $('#full-div2').hide();
           $('#latency-div').hide();
           $('#flow-table').hide();
           $('#query-div').hide();
@@ -72,14 +74,14 @@ img {
       $('#latency-div').show();
       if (q == 1) {
           $('#full-div').hide();
-          $('#latest-div').hide();
+          $('#full-div2').hide();
           $('#flow-table').hide();
           $('#query-div').hide();
           return;
       }
       if (q == 2) {
           $('#full-div').show();
-          $('#latest-div').show();
+          $('#full-div2').show();
           $('#flow-table').hide();
           $('#query-div').show();
           document.getElementById('query-code').innerHTML = packetQueryText;
@@ -87,7 +89,7 @@ img {
       }
       if (q == 3) {
           $('#full-div').hide();
-          $('#latest-div').hide();
+          $('#full-div2').hide();
           $('#flow-table').show();
           $('#query-div').show();
           document.getElementById('query-code').innerHTML = flowQueryText;
@@ -95,7 +97,7 @@ img {
   }
 
   function runBasicSetup() {
-      console.log(queryRunning);
+      console.log("1");
       if (queryRunning != 0) {
           return;
       }
@@ -106,6 +108,7 @@ img {
   }
 
   function runPacketQuery() {
+      console.log("2");
       if (queryRunning != 0) {
           return;
       }
@@ -116,6 +119,7 @@ img {
   }
 
   function runFlowQuery() {
+      console.log("3");
       if (queryRunning != 0) {
           return;
       }
@@ -146,26 +150,32 @@ img {
     <div id="query-div" style="text-align: center" >
         <p style="display: inline-block" align="left"><code id="query-code"></code></p>
     </div>
-    <div id="container-left" style="width: 50%; float: left">
-      <div id="latency-div" style="display:none">
-          <h2>Latency</h2>
-          <img id="latencyImage"/>
+    <div id="container-top">
+      <div id="container-top-left" style="width: 50%; float: left">
+        <div id="full-div" style="display:none">
+          <h2>Queue Size (Left switch)</h2>
+          <img id="fullImage"/>
+        </div>
       </div>
-    </div>
-    <div id="container-right" style="width: 50%; float: right">
-      <div id="full-div" style="display:none">
-        <h2>Long term</h2>
-        <img id="fullImage"/>
-      </div>
-      <div id="flow-table" style="display:none">
-          <h2>Per-Flow Stats</h2>
-          <div id="flowStats"/>
+      <div id="container-top-right" style="width: 50%; float: right">
+        <div id="full-div2" style="display:none">
+          <h2>Queue Size (Right switch)</h2>
+          <img id="fullImage2"/>
+        </div>
       </div>
     </div>
     <div id="container-bottom">
-      <div id="latest-div" style="display:none">
-        <h2>Latest</h2>
-        <img id="latestImage"/>
+      <div id="container-left" style="width: 50%; float: left">
+        <div id="latency-div" style="display:none">
+            <h2>Latency</h2>
+            <img id="latencyImage"/>
+        </div>
+      </div>
+      <div id="container-right" style="width: 50%; float: right">
+        <div id="flow-table" style="display:none">
+            <h2>Per-Flow Stats</h2>
+            <div id="flowStats"/>
+        </div>
       </div>
     </div>
   </center>
